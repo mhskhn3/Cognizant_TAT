@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Onboarding TAT Predictor & Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --google-blue: #1A73E8;
+            --google-red: #DB4437;
+            --google-yellow: #F4B400;
+            --google-green: #0F9D58;
+            --google-grey: #5f6368;
+            --google-light-grey: #f1f3f4;
+            --google-dark-grey: #202124;
+            --google-white: #ffffff;
+            --google-card-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            --google-card-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.2);
+            --gradient-blue-green: linear-gradient(135deg, #1A73E8, #0F9D58);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            color: var(--google-dark-grey);
+            line-height: 1.5;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: var(--google-white);
+            padding: 8px 20px;
+            box-shadow: 0 4px 8px rgba(26, 115, 232, 0.1);
+            border-radius: 8px;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 8px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+
+        .google-logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .google-logo span {
+            font-size: 18px;
+            font-weight: 700;
+            display: inline-block;
+            animation: float-logo 5s infinite ease-in-out;
+        }
+
+        .google-logo .g { color: var(--google-blue); animation-delay: 0s; }
+        .google-logo .o1 { color: var(--google-red); animation-delay: 0.1s; }
+        .google-logo .o2 { color: var(--google-yellow); animation-delay: 0.2s; }
+        .google-logo .g2 { color: var(--google-blue); animation-delay: 0.3s; }
+        .google-logo .l { color: var(--google-green); animation-delay: 0.4s; }
+        .google-logo .e { color: var(--google-red); animation-delay: 0.5s; }
+
+        .handshake {
+            font-size: 12px;
+            color: var(--google-grey);
+            animation: pulse 2s infinite;
+        }
+
+        .cognizant-logo {
+            font-size: 14px;
+            font-weight: 700;
+            color: #0033A1;
+            position: relative;
+        }
+
+        .cognizant-logo::after {
+            content: "";
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: var(--gradient-blue-green);
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .cognizant-logo:hover::after {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        @keyframes float-logo {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-2px); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.85; }
+        }
+
+        .header-title-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 2px;
+        }
+
+        h1 {
+            font-family: Cambria, serif;
+            font-size: 20px;
+            color: var(--google-blue);
+            font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+            transition: all 0.3s;
+        }
+
+        h1:hover {
+            transform: scale(1.05);
+            color: #174EA6;
+        }
+
+        h2 {
+            font-family: Cambria, serif;
+            font-size: 14px;
+            color: var(--google-dark-grey);
+            font-weight: 400;
+            opacity: 0.85;
+            animation: fadeIn 0.5s ease 0.2s;
+        }
+
+        .tab-container {
+            display: flex;
+            padding: 0 20px;
+            background: var(--google-white);
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--google-grey);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .tab:hover {
+            background: #f1f3f4;
+        }
+
+        .tab.active {
+            color: var(--google-blue);
+            background: #e8f0fe;
+        }
+
+        .tab.active::after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--google-blue);
+            border-radius: 2px 2px 0 0;
+        }
+
+        .tab-content {
+            display: none;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .tab-content.active {
+            display: flex;
+        }
+
+        .main-content {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        .form-column {
+            width: 300px;
+            background: var(--google-white);
+            padding: 14px;
+            box-shadow: var(--google-card-shadow);
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+        }
+
+        .form-section {
+            margin-bottom: 14px;
+        }
+
+        .form-section-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--google-dark-grey);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #e8f0fe;
+            padding: 6px 10px;
+            border-radius: 5px;
+        }
+
+        .form-section-title i {
+            color: var(--google-blue);
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: var(--google-dark-grey);
+            font-weight: 500;
+            font-size: 11px;
+        }
+
+        .mdc-text-field {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        select, input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #dadce0;
+            border-radius: 5px;
+            background: #fff;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%235f6368' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 8px center;
+            background-size: 12px;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--google-blue);
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-container input {
+            padding-right: 32px;
+        }
+
+        .search-container i {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--google-grey);
+            font-size: 12px;
+        }
+
+        .dropdown-list {
+            display: none;
+            position: absolute;
+            width: 100%;
+            max-height: 160px;
+            overflow-y: auto;
+            background: #fff;
+            border: 1px solid #dadce0;
+            border-radius: 0 0 5px 5px;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .dropdown-list div {
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .dropdown-list div:hover {
+            background: #e8f0fe;
+        }
+
+        .mdc-button {
+            width: 100%;
+            height: 36px;
+            border-radius: 18px;
+            font-weight: 500;
+            font-size: 12px;
+            background: var(--gradient-blue-green) !important;
+            color: white !important;
+            margin-top: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+        }
+
+        .mdc-button:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .mdc-button__icon {
+            margin-right: 5px;
+            font-size: 12px;
+        }
+
+        .results-column {
+            flex: 1;
+            background: #f8f9fa;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .result-nodes {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            flex: 1;
+            position: relative;
+        }
+
+        .result-node {
+            background: var(--google-white);
+            border-radius: 6px;
+            padding: 10px;
+            box-shadow: var(--google-card-shadow);
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            min-width: 150px;
+            max-width: 150px;
+            z-index: 1;
+        }
+
+        .result-node:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--google-card-shadow-hover);
+        }
+
+        .result-node::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--google-blue);
+        }
+
+        .result-node.total-tat::before {
+            background: var(--gradient-blue-green);
+        }
+
+        .result-node.secondary-1::before { background: var(--google-blue); }
+        .result-node.secondary-2::before { background: var(--google-red); }
+        .result-node.secondary-3::before { background: var(--google-yellow); }
+        .result-node.secondary-4::before { background: var(--google-green); }
+
+        .result-node.total-tat::after {
+            content: "";
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            width: 2px;
+            height: 25px;
+            background: var(--google-grey);
+            border-radius: 1px;
+            animation: fadeInConnector 0.5s ease 0.1s;
+        }
+
+        .result-node.secondary-2::after {
+            content: "";
+            position: absolute;
+            bottom: -25px;
+            left: 50%;
+            width: 2px;
+            height: 25px;
+            background: var(--google-grey);
+            border-radius: 1px;
+            animation: fadeInConnector 0.5s ease 0.3s;
+        }
+
+        .node-icon {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: var(--google-white);
+            background: var(--google-blue);
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+            transition: transform 0.3s;
+        }
+
+        .result-node:hover .node-icon {
+            transform: scale(1.1);
+        }
+
+        .result-node.total-tat .node-icon {
+            background: var(--gradient-blue-green);
+        }
+
+        .result-node.secondary-1 .node-icon { background: var(--google-blue); }
+        .result-node.secondary-2 .node-icon { background: var(--google-red); }
+        .result-node.secondary-3 .node-icon { background: var(--google-yellow); }
+        .result-node.secondary-4 .node-icon { background: var(--google-green); }
+
+        .result-node h3 {
+            font-size: 11px;
+            color: var(--google-grey);
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .node-value {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--google-dark-grey);
+            margin: 5px 0;
+        }
+
+        .node-days {
+            font-size: 10px;
+            color: var(--google-grey);
+            font-weight: 500;
+        }
+
+        .total-tat-container {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        .branch-level-1 {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .branch-level-2 {
+            display: flex;
+            justify-content: flex-start;
+            gap: 20px;
+            position: relative;
+            margin-left: 170px;
+        }
+
+        @keyframes fadeInConnector {
+            from { opacity: 0; transform: scaleY(0); }
+            to { opacity: 1; transform: scaleY(1); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            flex-direction: column;
+        }
+
+        .loading-text {
+            margin-top: 10px;
+            color: var(--google-dark-grey);
+            font-weight: 500;
+            font-size: 12px;
+        }
+
+        .google-spinner {
+            display: flex;
+        }
+
+        .google-spinner .dot {
+            width: 8px;
+            height: 8px;
+            margin: 0 2px;
+            border-radius: 50%;
+            animation: google-spinner 1.5s infinite ease-in-out;
+        }
+
+        .google-spinner .dot-1 { background-color: var(--google-blue); animation-delay: 0s; }
+        .google-spinner .dot-2 { background-color: var(--google-red); animation-delay: 0.3s; }
+        .google-spinner .dot-3 { background-color: var(--google-yellow); animation-delay: 0.6s; }
+        .google-spinner .dot-4 { background-color: var(--google-green); animation-delay: 0.9s; }
+
+        @keyframes google-spinner {
+            0%, 100% { transform: scale(0.3); }
+            50% { transform: scale(1); }
+        }
+
+        .message {
+            padding: 8px 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .error {
+            background: rgba(219, 68, 55, 0.1);
+            color: var(--google-red);
+            border-left: 2px solid var(--google-red);
+        }
+
+        .message i {
+            margin-right: 5px;
+            font-size: 12px;
+        }
+
+        .accuracy-note {
+            padding: 10px;
+            background: rgba(26, 115, 232, 0.1);
+            border-left: 2px solid var(--google-blue);
+            border-radius: 5px;
+            font-size: 12px;
+            color: var(--google-dark-grey);
+            margin-top: 14px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .accuracy-note i {
+            color: var(--google-blue);
+            margin-right: 6px;
+            font-size: 14px;
+        }
+
+        .recent-predictions {
+            background: var(--google-white);
+            border-radius: 6px;
+            padding: 12px;
+            box-shadow: var(--google-card-shadow);
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .recent-predictions i {
+            font-size: 20px;
+            color: var(--google-blue);
+            margin-bottom: 8px;
+        }
+
+        .recent-predictions p {
+            font-size: 13px;
+            color: var(--google-dark-grey);
+            font-weight: 500;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 10px;
+            margin-bottom: 14px;
+        }
+
+        .stat-card {
+            background: var(--google-white);
+            border-radius: 6px;
+            padding: 12px;
+            box-shadow: var(--google-card-shadow);
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--google-card-shadow-hover);
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 5px 0;
+            color: var(--google-blue);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--google-grey);
+            font-weight: 500;
+        }
+
+        .dashboard-predictions {
+            background: var(--google-white);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 14px;
+            box-shadow: var(--google-card-shadow);
+        }
+
+        .dashboard-predictions h3 {
+            font-size: 13px;
+            margin-bottom: 10px;
+            color: var(--google-dark-grey);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dashboard-predictions h3 i {
+            color: var(--google-blue);
+            font-size: 13px;
+        }
+
+        .prediction-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 12px;
+            align-items: center;
+        }
+
+        .prediction-row:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .prediction-label {
+            font-weight: 500;
+            color: var(--google-dark-grey);
+        }
+
+        .prediction-value {
+            font-weight: bold;
+            background: #e8f0fe;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            color: var(--google-blue);
+        }
+
+        .remarks {
+            background: #e8f0fe;
+            padding: 10px;
+            border-radius: 5px;
+            font-size: 12px;
+            border-left: 2px solid var(--google-blue);
+        }
+
+        .remarks strong {
+            color: var(--google-blue);
+        }
+
+        @media (max-width: 1200px) {
+            .form-column {
+                width: 280px;
+            }
+            .result-node {
+                min-width: 140px;
+                max-width: 140px;
+            }
+            .branch-level-1, .branch-level-2 {
+                gap: 15px;
+            }
+            .branch-level-2 {
+                margin-left: 155px;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                flex-direction: column;
+            }
+
+            .form-column {
+                width: 100%;
+                padding: 12px;
+                box-shadow: none;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .results-column {
+                padding: 10px;
+            }
+
+            .total-tat-container {
+                justify-content: center;
+            }
+
+            .branch-level-1, .branch-level-2 {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .branch-level-2 {
+                margin-left: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            header {
+                padding: 6px 15px;
+                margin: 6px;
+            }
+
+            h1 {
+                font-size: 18px;
+            }
+
+            h2 {
+                font-size: 12px;
+            }
+
+            .logo-container {
+                margin-bottom: 3px;
+            }
+
+            .header-title-container {
+                gap: 1px;
+            }
+
+            .branch-level-1, .branch-level-2 {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .result-node {
+                min-width: 100%;
+                max-width: 100%;
+            }
+
+            .result-nodes {
+                gap: 6px;
+                margin-bottom: 8px;
+            }
+
+            .result-node.total-tat::after,
+            .result-node.secondary-2::after {
+                left: 50%;
+                width: 2px;
+                height: 25px;
+            }
+
+            .branch-level-2 {
+                margin-left: 0;
+            }
+
+            .dashboard-stats {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            }
+        }
+
+        @media (max-width: 480px) {
+            .google-logo span {
+                font-size: 16px;
+            }
+
+            .handshake {
+                font-size: 10px;
+            }
+
+            .cognizant-logo {
+                font-size: 12px;
+            }
+
+            .header-title-container {
+                gap: 1px;
+            }
+
+            .dashboard-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .prediction-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 3px;
+            }
+
+            .prediction-value {
+                align-self: flex-end;
+            }
+
+            .result-node {
+                min-width: 100%;
+                max-width: 100%;
+            }
+        }
+
+        .animate-bounce {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        .animate-float {
+            animation: float 5s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-2px, 0, 0); }
+            40%, 60% { transform: translate3d(2px, 0, 0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo-container">
+                <div class="google-logo">
+                    <span class="g">G</span>
+                    <span class="o1">o</span>
+                    <span class="o2">o</span>
+                    <span class="g2">g</span>
+                    <span class="l">l</span>
+                    <span class="e">e</span>
+                </div>
+                <div class="handshake">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <div class="cognizant-logo">Cognizant</div>
+            </div>
+            <div class="header-title-container">
+                <h1>Onboarding TAT Predictor & Dashboard</h1>
+                <h2>Track and predict onboarding timelines with AI-powered precision</h2>
+            </div>
+        </header>
+
+        <div class="tab-container">
+            <button class="tab active" onclick="openTab('predictor')">TAT Predictor</button>
+            <button class="tab" onclick="openTab('dashboard')">Pending Work Dashboard</button>
+        </div>
+
+        <div id="predictor" class="tab-content active">
+            <div class="main-content">
+                <div class="form-column">
+                    <div class="form-section">
+                        <div class="form-section-title">
+                            <i class="fas fa-sliders-h"></i>
+                            <span>Prediction Parameters</span>
+                        </div>
+
+                        <div id="errorMessage" class="message error" style="display: none;">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span></span>
+                        </div>
+
+                        <form id="predictionForm">
+                            <div class="form-group">
+                                <label for="product_area">Product Area</label>
+                                <div class="search-container">
+                                    <input type="text" id="productAreaInput" placeholder="Search product area..." autocomplete="off">
+                                    <i class="fas fa-search"></i>
+                                    <div id="productAreaList" class="dropdown-list"></div>
+                                    <input type="hidden" name="product_area" id="product_area" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="location_country">Location Country</label>
+                                <div class="search-container">
+                                    <input type="text" id="countryInput" placeholder="Search country..." autocomplete="off">
+                                    <i class="fas fa-search"></i>
+                                    <div id="countryList" class="dropdown-list"></div>
+                                    <input type="hidden" name="location_country" id="location_country" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="supplier_name">Supplier Name</label>
+                                <div class="search-container">
+                                    <input type="text" id="supplierInput" placeholder="Search supplier..." autocomplete="off">
+                                    <i class="fas fa-search"></i>
+                                    <div id="supplierList" class="dropdown-list"></div>
+                                    <input type="hidden" name="supplier_name" id="supplier_name" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="worker_access_type">Worker Access Type</label>
+                                <select id="worker_access_type" name="worker_access_type" required>
+                                    <option value="">Select Worker Access Type</option>
+                                    <option value="Equipment and Access">Equipment and Access</option>
+                                    <option value="Access Only">Access Only</option>
+                                    <option value="Badge Only">Badge Only</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="location_region">Location Region</label>
+                                <select id="location_region" name="location_region" required>
+                                    <option value="">Select Location Region</option>
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="Equipment_Type">Equipment Type</label>
+                                <select id="Equipment_Type" name="Equipment_Type" required>
+                                    <option value="">Select Equipment Type</option>
+                                    <option value="Saksham">Saksham</option>
+                                    <option value="Non-Saksham">Non-Saksham</option>
+                                </select>
+                            </div>
+
+                            <button class="mdc-button mdc-button--raised" type="submit" id="predictButton">
+                                <span class="mdc-button__label">
+                                    <i class="fas fa-chart-line mdc-button__icon"></i>
+                                    Predict Timeline
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="results-column">
+                    <div class="loading" id="loading">
+                        <div class="google-spinner">
+                            <div class="dot dot-1"></div>
+                            <div class="dot dot-2"></div>
+                            <div class="dot dot-3"></div>
+                            <div class="dot dot-4"></div>
+                        </div>
+                        <div class="loading-text">Analyzing your request...</div>
+                    </div>
+
+                    <div class="result-nodes" id="resultNodes">
+                        <div class="total-tat-container">
+                            <div class="result-node total-tat">
+                                <div class="node-icon animate-bounce">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+                                <h3>Total Onboarding TAT</h3>
+                                <div class="node-value" id="total_tat">-</div>
+                                <div class="node-days">days</div>
+                            </div>
+                        </div>
+
+                        <div class="branch-level-1">
+                            <div class="result-node secondary-1">
+                                <div class="node-icon animate-float">
+                                    <i class="fas fa-laptop-code"></i>
+                                </div>
+                                <h3>xWS Activation</h3>
+                                <div class="node-value" id="xws_activation">-</div>
+                                <div class="node-days">days</div>
+                            </div>
+
+                            <div class="result-node secondary-2">
+                                <div class="node-icon animate-float" style="animation-delay: 0.2s;">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                <h3>System Activation</h3>
+                                <div class="node-value" id="system_activation">-</div>
+                                <div class="node-days">days</div>
+                            </div>
+                        </div>
+
+                        <div class="branch-level-2">
+                            <div class="result-node secondary-3">
+                                <div class="node-icon animate-float" style="animation-delay: 0.4s;">
+                                    <i class="fas fa-id-card"></i>
+                                </div>
+                                <h3>xWS to IDV</h3>
+                                <div class="node-value" id="xws_to_idv">-</div>
+                                <div class="node-days">days</div>
+                            </div>
+
+                            <div class="result-node secondary-4">
+                                <div class="node-icon animate-float" style="animation-delay: 0.6s;">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <h3>IDV to System</h3>
+                                <div class="node-value" id="idv_to_system">-</div>
+                                <div class="node-days">days</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accuracy-note">
+                        <i class="fas fa-info-circle"></i>
+                        <div>
+                            <strong>Prediction Accuracy Note:</strong> Our AI model provides estimates with 85-90% accuracy based on historical data.
+                            Actual onboarding times may vary by ±3 days depending on individual case complexity and regional processing variations.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="dashboard" class="tab-content">
+            <div class="main-content">
+                <div class="form-column">
+                    <div class="form-section">
+                        <div class="form-section-title">
+                            <i class="fas fa-filter"></i>
+                            <span>Dashboard Filters</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dashboard_supplier">Supplier</label>
+                            <div class="search-container">
+                                <input type="text" id="dashboardSupplierInput" placeholder="Search supplier..." autocomplete="off">
+                                <i class="fas fa-search"></i>
+                                <div id="dashboardSupplierList" class="dropdown-list"></div>
+                                <input type="hidden" name="dashboard_supplier" id="dashboard_supplier">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dashboard_product">Product Area</label>
+                            <div class="search-container">
+                                <input type="text" id="dashboardProductInput" placeholder="Search product area..." autocomplete="off">
+                                <i class="fas fa-search"></i>
+                                <div id="dashboardProductList" class="dropdown-list"></div>
+                                <input type="hidden" name="dashboard_product" id="dashboard_product">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dashboard_country">Country</label>
+                            <div class="search-container">
+                                <input type="text" id="dashboardCountryInput" placeholder="Search country..." autocomplete="off">
+                                <i class="fas fa-search"></i>
+                                <div id="dashboardCountryList" class="dropdown-list"></div>
+                                <input type="hidden" name="dashboard_country" id="dashboard_country">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dashboard_region">Region</label>
+                            <select id="dashboard_region" class="dashboard-filter">
+                                <option value="">Select Region</option>
+                                <!-- Populated dynamically -->
+                            </select>
+                        </div>
+
+                        <button class="mdc-button mdc-button--raised" id="refreshDashboard">
+                            <span class="mdc-button__label">
+                                <i class="fas fa-sync-alt mdc-button__icon"></i>
+                                Refresh Dashboard
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="form-section">
+                        <div class="form-section-title">
+                            <i class="fas fa-chart-pie"></i>
+                            <span>Quick Stats</span>
+                        </div>
+                        <div class="recent-predictions">
+                            <i class="fas fa-chart-bar"></i>
+                            <p>Apply filters to view statistics</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="results-column">
+                    <div class="loading" id="dashboardLoading" style="display: none;">
+                        <div class="google-spinner">
+                            <div class="dot dot-1"></div>
+                            <div class="dot dot-2"></div>
+                            <div class="dot dot-3"></div>
+                            <div class="dot dot-4"></div>
+                        </div>
+                        <div class="loading-text">Updating dashboard data...</div>
+                    </div>
+
+                    <div class="results-header">
+                        <div>
+                            <div class="results-title">Pending Work Insights Dashboard</div>
+                        </div>
+                        <div>
+                            <span style="font-size: 11px; color: var(--google-grey);">
+                                <i class="fas fa-circle" style="color: var(--google-green); font-size: 7px;"></i>
+                                Updated just now
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-stats">
+                        <div class="stat-card">
+                            <div class="stat-value" id="open_work_orders">0</div>
+                            <div class="stat-label">Open Work Orders</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="pending_xws">0</div>
+                            <div class="stat-label">Pending xWS Activation</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="pending_idv">0</div>
+                            <div class="stat-label">Pending IDV Completion</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-value" id="pending_system">0</div>
+                            <div class="stat-label">Pending System Access</div>
+                        </div>
+                    </div>
+
+                    <div class="dashboard-predictions">
+                        <h3>
+                            <i class="fas fa-hourglass-half"></i>
+                            Estimated Completion Times
+                        </h3>
+                        <div class="prediction-row">
+                            <span class="prediction-label">Time to complete pending xWS Activation:</span>
+                            <span class="prediction-value" id="prediction_xws">- days</span>
+                        </div>
+                        <div class="prediction-row">
+                            <span class="prediction-label">Time to complete xWS to IDV Completion:</span>
+                            <span class="prediction-value" id="prediction_xws_to_idv">- days</span>
+                        </div>
+                        <div class="prediction-row">
+                            <span class="prediction-label">Time to complete IDV to System Access:</span>
+                            <span class="prediction-value" id="prediction_idv_to_sys">- days</span>
+                        </div>
+                    </div>
+
+                    <div class="remarks">
+                        <p><strong>Overall Estimated Time:</strong> <span id="total_estimated">- days</span></p>
+                        <p><span id="estimated_insights">Apply filters to view estimated completion insights.</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
+    <script>
+        mdc.autoInit();
+
+        let productAreas = [];
+        let countries = [];
+        let suppliers = [];
+        let regions = [];
+
+        // Fetch dropdown options on page load
+        async function fetchOptions() {
+            try {
+                const response = await fetch('/get-options', {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                if (!response.ok) throw new Error('Failed to fetch options');
+                const data = await response.json();
+                if (data.error) throw new Error(data.error);
+
+                productAreas = data.product_areas || [];
+                countries = data.countries || [];
+                suppliers = data.suppliers || [];
+                regions = data.regions || [];
+
+                // Populate region dropdowns
+                const regionSelects = [
+                    document.getElementById('location_region'),
+                    document.getElementById('dashboard_region')
+                ];
+                regionSelects.forEach(select => {
+                    select.innerHTML = '<option value="">Select Region</option>';
+                    regions.forEach(region => {
+                        const option = document.createElement('option');
+                        option.value = region;
+                        option.textContent = region;
+                        select.appendChild(option);
+                    });
+                });
+
+                // Setup search dropdowns
+                setupSearchDropdown('productAreaInput', 'productAreaList', 'product_area', productAreas);
+                setupSearchDropdown('countryInput', 'countryList', 'location_country', countries);
+                setupSearchDropdown('supplierInput', 'supplierList', 'supplier_name', suppliers);
+                setupSearchDropdown('dashboardSupplierInput', 'dashboardSupplierList', 'dashboard_supplier', suppliers);
+                setupSearchDropdown('dashboardProductInput', 'dashboardProductList', 'dashboard_product', productAreas);
+                setupSearchDropdown('dashboardCountryInput', 'dashboardCountryList', 'dashboard_country', countries);
+            } catch (error) {
+                console.error('Error fetching options:', error);
+                const errorMsg = document.getElementById('errorMessage');
+                errorMsg.querySelector('span').textContent = 'Failed to load dropdown options. Please try again.';
+                errorMsg.style.display = 'flex';
+                errorMsg.style.animation = 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both';
+            }
+        }
+
+        // Call fetchOptions on page load
+        document.addEventListener('DOMContentLoaded', fetchOptions);
+
+        function openTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            tabs.forEach(tab => tab.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+
+            document.querySelector(`[onclick="openTab('${tabName}')"]`).classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+
+            const activeContent = document.getElementById(tabName);
+            activeContent.style.opacity = '0';
+            activeContent.style.transform = 'translateY(6px)';
+            setTimeout(() => {
+                activeContent.style.opacity = '1';
+                activeContent.style.transform = 'translateY(0)';
+                activeContent.style.transition = 'all 0.3s ease';
+            }, 50);
+        }
+
+        function setupSearchDropdown(inputId, listId, hiddenInputId, items) {
+            const input = document.getElementById(inputId);
+            const list = document.getElementById(listId);
+            const hiddenInput = document.getElementById(hiddenInputId);
+
+            input.addEventListener('focus', () => {
+                populateDropdownList(list, items, input, hiddenInput);
+                list.style.display = 'block';
+            });
+
+            input.addEventListener('input', () => {
+                const searchTerm = input.value.toLowerCase();
+                const filteredItems = items.filter(item => item.toLowerCase().includes(searchTerm));
+                populateDropdownList(list, filteredItems, input, hiddenInput);
+                list.style.display = 'block';
+            });
+        }
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.search-container')) {
+                document.querySelectorAll('.dropdown-list').forEach(dropdown => {
+                    dropdown.style.display = 'none';
+                });
+            }
+        });
+
+        function populateDropdownList(listElement, items, inputElement, hiddenInputElement) {
+            listElement.innerHTML = '';
+
+            if (items.length === 0) {
+                const noResult = document.createElement('div');
+                noResult.textContent = 'No items found';
+                noResult.style.padding = '8px 12px';
+                noResult.style.color = 'var(--google-grey)';
+                listElement.appendChild(noResult);
+                return;
+            }
+
+            items.forEach(item => {
+                const option = document.createElement('div');
+                option.textContent = item;
+                option.addEventListener('click', () => {
+                    inputElement.value = item;
+                    hiddenInputElement.value = item;
+                    listElement.style.display = 'none';
+                    option.style.backgroundColor = '#e8f0fe';
+                    setTimeout(() => option.style.backgroundColor = '', 300);
+                });
+                listElement.appendChild(option);
+            });
+        }
+
+        document.getElementById('predictionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+            let formData = {};
+
+            requiredFields.forEach(field => {
+                if (!field.value) {
+                    isValid = false;
+                    field.style.borderColor = 'var(--google-red)';
+                    const errorMsg = document.getElementById('errorMessage');
+                    errorMsg.querySelector('span').textContent = 'Please fill in all required fields';
+                    errorMsg.style.display = 'flex';
+                    errorMsg.style.animation = 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both';
+                } else {
+                    formData[field.name] = field.value;
+                    field.style.borderColor = '#dadce0';
+                }
+            });
+
+            if (!isValid) return;
+
+            document.getElementById('errorMessage').style.display = 'none';
+            document.getElementById('loading').style.display = 'flex';
+
+            fetch('/predict', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) throw new Error(data.error);
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('total_tat').textContent = data['Onboarding TAT'];
+                document.getElementById('xws_activation').textContent = data['xWS Activation'];
+                document.getElementById('system_activation').textContent = data['System Activation'];
+                document.getElementById('xws_to_idv').textContent = data['xws_activation_to_idv'];
+                document.getElementById('idv_to_system').textContent = data['xws_idv_to_system_activation'];
+
+                const nodes = document.querySelectorAll('.result-node');
+                nodes.forEach((node, index) => {
+                    node.style.opacity = '0';
+                    node.style.transform = 'translateY(12px)';
+                    setTimeout(() => {
+                        node.style.opacity = '1';
+                        node.style.transform = 'translateY(0)';
+                        node.style.transition = 'all 0.3s ease';
+                    }, 100 * index);
+                });
+
+                const values = document.querySelectorAll('.node-value');
+                values.forEach(value => {
+                    value.style.transform = 'scale(1.1)';
+                    value.style.color = 'var(--google-blue)';
+                    setTimeout(() => {
+                        value.style.transform = 'scale(1)';
+                        value.style.color = '';
+                    }, 500);
+                });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('loading').style.display = 'none';
+                const errorMsg = document.getElementById('errorMessage');
+                errorMsg.querySelector('span').textContent = 'Error occurred while making prediction. Please try again.';
+                errorMsg.style.display = 'flex';
+                errorMsg.style.animation = 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both';
+            });
+        });
+
+        document.getElementById('refreshDashboard').addEventListener('click', function() {
+            const supplier = document.getElementById('dashboard_supplier').value;
+            const product = document.getElementById('dashboard_product').value;
+            const country = document.getElementById('dashboard_country').value;
+            const region = document.getElementById('dashboard_region').value;
+
+            if (!supplier || !product || !country || !region) {
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'message error';
+                errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Please select all filters to view dashboard data';
+                errorMsg.style.animation = 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both';
+                const dashboardResults = document.querySelector('.results-column');
+                dashboardResults.insertBefore(errorMsg, dashboardResults.firstChild);
+                setTimeout(() => {
+                    errorMsg.style.animation = 'fadeOut 0.5s ease';
+                    setTimeout(() => errorMsg.remove(), 500);
+                }, 3000);
+                return;
+            }
+
+            document.getElementById('dashboardLoading').style.display = 'flex';
+
+            fetch('/dashboard-data', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ supplier, product, country, region })
+            })
+            .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+            })
+            .then(data => {
+                if (data.error) throw new Error(data.error);
+                document.getElementById('dashboardLoading').style.display = 'none';
+
+                // Update dashboard stats
+                document.getElementById('open_work_orders').textContent = data.open_work_orders;
+                document.getElementById('pending_xws').textContent = data.pending_xws;
+                document.getElementById('pending_idv').textContent = data.pending_idv;
+                document.getElementById('pending_system').textContent = data.pending_system;
+
+                // Update predictions
+                document.getElementById('prediction_xws').textContent = data.prediction_xws + ' days';
+                document.getElementById('prediction_xws_to_idv').textContent = data.prediction_xws_to_idv + ' days';
+                document.getElementById('prediction_idv_to_sys').textContent = data.prediction_idv_to_sys + ' days';
+
+                // Update remarks
+                document.getElementById('total_estimated').textContent = data.total_estimated + ' days';
+                document.getElementById('estimated_insights').textContent = data.estimated_insights;
+
+                // Animations
+                const dashboardElements = document.querySelectorAll('.dashboard-stats, .dashboard-predictions, .remarks');
+                dashboardElements.forEach((el, index) => {
+                    el.style.animation = 'fadeIn 0.5s ease ' + (index * 0.1) + 's both';
+                });
+
+                const statCards = document.querySelectorAll('.stat-card');
+                statCards.forEach((card, index) => {
+                    card.style.transform = 'scale(0.9)';
+                    card.style.opacity = '0';
+                    setTimeout(() => {
+                        card.style.transform = 'scale(1)';
+                        card.style.opacity = '1';
+                        card.style.transition = 'all 0.3s ease';
+                    }, index * 100);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching dashboard data:', error);
+                document.getElementById('dashboardLoading').style.display = 'none';
+                const errorMsg = document.createElement('div');
+                errorMsg.className = 'message error';
+                errorMsg.innerHTML = '<i class="fas fa-exclamation-circle"></i> Error fetching dashboard data. Please try again.';
+                errorMsg.style.animation = 'shake 0.5s cubic-bezier(.36,.07,.19,.97) both';
+                const dashboardResults = document.querySelector('.results-column');
+                dashboardResults.insertBefore(errorMsg, dashboardResults.firstChild);
+                setTimeout(() => {
+                    errorMsg.style.animation = 'fadeOut 0.5s ease';
+                    setTimeout(() => errorMsg.remove(), 500);
+                }, 3000);
+            });
+        });
+    </script>
+</body>
+</html>
